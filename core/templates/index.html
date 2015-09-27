@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gateway Status</title>
+    <style type="text/css">
+        html{height:100%}body{font-family:"Open Sans Light","Open Sans","Segoe UI",Helvetica,Arial;text-align:center;background:radial-gradient(circle,#fff 0%,#bbb 85%) no-repeat;background:-webkit-radial-gradient(circle,#fff 0%,#bbb 85%) no-repeat;}h1,a{margin-top:1em;color:#888;font-weight:lighter}.table{margin:0 auto;padding:0;width:400px;box-shadow:2px 2px 5px #888;border:1px solid #000;-moz-border-radius-bottomleft:0;-webkit-border-bottom-left-radius:0;border-bottom-left-radius:0;-moz-border-radius-bottomright:0;-webkit-border-bottom-right-radius:0;border-bottom-right-radius:0;-moz-border-radius-topright:0;-webkit-border-top-right-radius:0;border-top-right-radius:0;-moz-border-radius-topleft:0;-webkit-border-top-left-radius:0;border-top-left-radius:0}.table table{border-collapse:collapse;border-spacing:0;width:100%;height:100%;margin:0;padding:0}.table tr:last-child td:last-child{-moz-border-radius-bottomright:0;-webkit-border-bottom-right-radius:0;border-bottom-right-radius:0}.table table tr:first-child td:first-child{-moz-border-radius-topleft:0;-webkit-border-top-left-radius:0;border-top-left-radius:0}.table table tr:first-child td:last-child{-moz-border-radius-topright:0;-webkit-border-top-right-radius:0;border-top-right-radius:0}.table tr:last-child td:first-child{-moz-border-radius-bottomleft:0;-webkit-border-bottom-left-radius:0;border-bottom-left-radius:0}.table tr:nth-child(odd){background-color:#e5e5e5}.table tr:nth-child(even){background-color:#fff}.table td{vertical-align:middle;border:1px solid #000;border-width:0 1px 1px 0;text-align:center;padding:7px;font-size:10px;font-weight:400;color:#000}.table tr:last-child td{border-width:0 1px 0 0}.table tr td:last-child{border-width:0 0 1px}.table tr:last-child td:last-child{border-width:0}.table tr:first-child td{background:-o-linear-gradient(bottom,#ccc 5%,#b2b2b2 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0.05,#ccc),color-stop(1,#b2b2b2));background:-moz-linear-gradient(center top,#ccc 5%,#b2b2b2 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#cccccc",endColorstr="#b2b2b2");background:-o-linear-gradient(top,#ccc,b2b2b2);background-color:#ccc;border:0 solid #000;text-align:center;border-width:0 0 1px 1px;font-size:14px;font-weight:700;color:#000}.table tr:first-child:hover td{background:-o-linear-gradient(bottom,#ccc 5%,#b2b2b2 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0.05,#ccc),color-stop(1,#b2b2b2));background:-moz-linear-gradient(center top,#ccc 5%,#b2b2b2 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#cccccc",endColorstr="#b2b2b2");background:-o-linear-gradient(top,#ccc,b2b2b2);background-color:#ccc}.table tr:first-child td:first-child{border-width:0 0 1px}.table tr:first-child td:last-child{border-width:0 0 1px 1px}
+        .bold-on{
+            font-weight: 700;
+            color: #0e9e00;
+        }
+        .bold-off{
+            font-weight: 700;
+            color: #9e0006
+        }
+    </style>
+</head>
+<body>
+    <h1>The gateway is up and running.</h1>
+    {% if devices %}
+    <div class="table">
+    <table>
+
+            <tr>
+                <td>Ip</td>
+                <td>Type</td>
+                <td>Enabled</td>
+                <td>Description</td>
+                <td></td>
+            </tr>
+            {% for device in devices %}
+                <tr>
+                    <td>{{ device.ip }}</td>
+                    <td>{{ device.get_type_display }}</td>
+                    <td>{% if device.enabled %}<span class="bold-on">ON</span>{% else %}<span class="bold-off">OFF</span>{% endif %}</td>
+                    <td>{{ device.description|default:"" }}</td>
+                    {% if device.enabled %}
+                        <td><form onsubmit="return confirm('By disabling this device the data from it will not be taken into consideration. Do you still want to do it ?')" action="" method="post">{% csrf_token %}<input type="hidden" name="id" value="{{device.id}}" /><button name="action" value="disable">Disable</button> </form> </td>
+                    {% else %}
+                        <td><form action="" method="post">{% csrf_token %}<input type="hidden" name="id" value="{{device.id}}" /><button name="action" value="enable">Enable</button> </form> </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+
+    </table>
+        </div>
+    {% endif %}
+</body>
+</html>
