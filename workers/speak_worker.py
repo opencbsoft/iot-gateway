@@ -3,7 +3,7 @@
     It should speak the text that you send to it
 
     FIELDS
-    message = the text to be speaken
+    message = the text to be spoken
     left = True/False (optional)
     right = True/False (optional)
 
