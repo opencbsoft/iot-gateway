@@ -34,6 +34,7 @@ def index(request):
 def device(request, url):
     data = dict()
     ip = get_client_ip(request)
+    error = False
     if url not in ['0', '1', '2']:
         error = 'The type of the client should be one of these "0" "1" "2".'
     else:
