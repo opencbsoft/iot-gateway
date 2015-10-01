@@ -28,19 +28,21 @@ def index(request):
             dev.enabled = True
             dev.save()
             return redirect('index')
-    return HttpResponse(status=200)
+    return render(request, 'index.html', data)
 
 
 def device(request, url):
     data = dict()
     ip = get_client_ip(request)
     if url not in ['0', '1', '2']:
-        data['error'] = 'The type of the client should be one of these "0" "1" "2".'
+        error = 'The type of the client should be one of these "0" "1" "2".'
     else:
         dev, dev_created = Device.objects.get_or_create(ip=get_client_ip(request), type=url)
         """
             PROCESS DEVICE LOGIC
         """
 
-        data['device'] = dev
-    return render(request, 'device.html', data)
+    if error:
+        return HttpResponse(status=404, content=error)
+    else:
+        return HttpResponse(status=200)
