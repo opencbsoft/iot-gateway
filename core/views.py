@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
 from core.models import Device
 
@@ -27,7 +28,7 @@ def index(request):
             dev.enabled = True
             dev.save()
             return redirect('index')
-    return render(request, 'index.html', data)
+    return HttpResponse(status=200)
 
 
 def device(request, url):
