@@ -60,9 +60,9 @@ def device(request, url):
             PROCESS DEVICE LOGIC
         """
         if dev.action_file:
-            if os.path.exists(dev.action_file):
-                import_file('/home/pi/iot-gateway/scripts/'+dev.action_file)
-                main(request.GET)
+            import_file('/home/pi/iot-gateway/scripts/'+dev.action_file)
+            main(request.GET)
+
     if error:
         return HttpResponse(status=404, content=error)
     else:
