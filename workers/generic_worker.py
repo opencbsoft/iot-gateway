@@ -3,8 +3,10 @@ from paho.mqtt import publish
 import json
 import configparser
 import os
-
-from settings import *
+try:
+    from settings import *
+except:
+    from workers.settings import *
 
 """Generic linux daemon base class for python 3.x."""
 
