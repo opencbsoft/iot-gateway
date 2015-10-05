@@ -15,11 +15,12 @@ class IotWorker(object):
         self.pool_name = pool_name
         self.client.on_connect = self.on_connect
         self.client.on_message = on_message
-        
 
     def on_connect(self, client, user_data, rc):
         self.client.subscribe(self.pool_name)
 
+    def loop(self):
+        self.client.loop_forever()
 
 def iot_publish(topic, data):
     publish.single(topic, json.dumps(data), hostname=QUEUE_HOSTNAME, port=QUEUE_PORT)

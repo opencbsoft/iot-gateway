@@ -38,3 +38,4 @@ def on_message(client, user_data, msg):
             requests.get('{0}/set-configuration'.format(API_URL), params={'key': auth_request['key'], 'cam_id': camera_id, 'privacy': action}, verify=False).json()
 
 worker = IotWorker(POOL_NAME, on_message)
+worker.loop()
