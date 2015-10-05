@@ -4,7 +4,7 @@ import json
 import configparser
 import os
 
-from settings import *
+from .settings import *
 
 
 class IotWorker(object):

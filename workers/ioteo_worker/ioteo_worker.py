@@ -10,8 +10,8 @@ import json
 import requests
 import logging
 
-from generic_worker import IotWorker
-from ioteo_settings import *
+from ..generic_worker.generic_worker import IotWorker
+from .ioteo_settings import *
 
 '''
     REQUIEREMENTS

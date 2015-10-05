@@ -58,4 +58,4 @@ docs/_build/
 target/
 .idea/*
 
-workers/ioteo_settings.py
+workers/ioteo_worker/ioteo_settings.py

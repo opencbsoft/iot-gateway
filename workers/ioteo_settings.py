@@ -1,3 +1,0 @@
-USERNAME = 'johnybe2003@yahoo.com'
-PASSWORD = 'GArcea1984'
-CAMERA_LIST = ['001WYZ4WT9', '001WYZ4W19']
