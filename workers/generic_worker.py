@@ -15,7 +15,7 @@ class IotWorker(object):
         self.pool_name = pool_name
         self.client.on_connect = self.on_connect
         self.client.on_message = on_message
-        self.client.loop_forever()
+        
 
     def on_connect(self, client, user_data, rc):
         self.client.subscribe(self.pool_name)
