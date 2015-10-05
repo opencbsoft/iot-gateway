@@ -1,24 +1,9 @@
 import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
-from importlib.machinery import SourceFileLoader
+import importlib
 
 from core.models import Device
-
-def import_file(full_path_to_module):
-    try:
-        import os
-        module_dir, module_file = os.path.split(full_path_to_module)
-        module_name, module_ext = os.path.splitext(module_file)
-        save_cwd = os.getcwd()
-        os.chdir(module_dir)
-        module_obj = __import__(module_name)
-        module_obj.__file__ = full_path_to_module
-        globals()[module_name] = module_obj
-        os.chdir(save_cwd)
-    except:
-        raise ImportError
 
 
 def get_client_ip(request):
@@ -60,8 +45,8 @@ def device(request, url):
             PROCESS DEVICE LOGIC
         """
         if dev.action_file:
-            import_file('/home/pi/iot-gateway/scripts/'+dev.action_file)
-            main(request.GET)
+            i = importlib.import_module(dev.action_file)
+            i.main(request.GET)
 
     if error:
         return HttpResponse(status=404, content=error)
