@@ -163,3 +163,26 @@ def save_config(pool_name, data):
     config['DEFAULT'] = data
     with open(STORAGE_ROOT + '/' + pool_name + '/storage.ini', 'w') as configfile:
         config.write(configfile)
+
+
+def main_app(name, pool_name, on_message):
+    class GenericDaemon(Daemon):
+        def run(self):
+            # Or simply merge your code with MyDaemon.
+            worker = IotWorker(pool_name, on_message)
+    if name == "__main__":
+        daemon = GenericDaemon('/tmp/'+pool_name+'+.pid')
+        if len(sys.argv) == 2:
+            if 'start' == sys.argv[1]:
+                daemon.start()
+            elif 'stop' == sys.argv[1]:
+                daemon.stop()
+            elif 'restart' == sys.argv[1]:
+                daemon.restart()
+            else:
+                print("Unknown command")
+                sys.exit(2)
+            sys.exit(0)
+        else:
+            print("usage: %s start|stop|restart" % sys.argv[0])
+            sys.exit(2)

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
     Wake on Lan 0.1
     It should receive the mac of the network device to wake up
@@ -10,7 +11,7 @@ from subprocess import call
 import os
 from wakeonlan import wol
 
-from .generic_worker import *
+from generic_worker import *
 
 '''
     REQUIEREMENTS
@@ -27,4 +28,6 @@ def on_message(client, user_data, msg):
     if 'mac' in data:
         wol.send_magic_packet(data['mac'])
 
-worker = IotWorker(POOL_NAME, on_message)
+
+#create a daemon and run the worker
+main_app(__name__, POOL_NAME, on_message)

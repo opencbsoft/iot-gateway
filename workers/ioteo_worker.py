@@ -41,25 +41,5 @@ def on_message(client, user_data, msg):
         for camera_id in CAMERA_LIST:
             requests.get('{0}/set-configuration'.format(API_URL), params={'key': auth_request['key'], 'cam_id': camera_id, 'privacy': action}, verify=False).json()
 
-
-class IotDaemon(Daemon):
-        def run(self):
-            # Or simply merge your code with MyDaemon.
-            worker = IotWorker(POOL_NAME, on_message)
-
-if __name__ == "__main__":
-        daemon = IotDaemon('/tmp/daemon-iot.pid')
-        if len(sys.argv) == 2:
-            if 'start' == sys.argv[1]:
-                daemon.start()
-            elif 'stop' == sys.argv[1]:
-                daemon.stop()
-            elif 'restart' == sys.argv[1]:
-                daemon.restart()
-            else:
-                print("Unknown command")
-                sys.exit(2)
-            sys.exit(0)
-        else:
-            print("usage: %s start|stop|restart" % sys.argv[0])
-            sys.exit(2)
+#create a daemon and run the worker
+main_app(__name__, POOL_NAME, on_message)

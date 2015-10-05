@@ -12,7 +12,7 @@
 from subprocess import call
 import os
 
-from .generic_worker import *
+from generic_worker import *
 
 '''
     REQUIEREMENTS
@@ -37,4 +37,6 @@ def on_message(client, user_data, msg):
             call(["mpg123", "-q", STORAGE_ROOT+'/'+POOL_NAME+'/'+data.get('file')])
             call(['amixer', "-q", 'sset', 'Speaker', '{0}%,{0}%'.format(DEFAULT_SOUND_VOLUME)])
 
-worker = IotWorker(POOL_NAME, on_message)
+
+#create a daemon and run the worker
+main_app(__name__, POOL_NAME, on_message)

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
     Text to speech from google 0.1
     It should speak the text that you send to it
@@ -12,7 +13,7 @@
 import json
 from subprocess import call
 
-from .generic_worker import *
+from generic_worker import *
 
 '''
     REQUIEREMENTS
@@ -35,4 +36,6 @@ def on_message(client, user_data, msg):
     call(["mpg123", "-q", "http://translate.google.com/translate_tts?tl=%s&q=%s&ie=%s&total=1&idx=0&client=t" % ("en", data.get('message', 'No message was set'), "UTF-8")])
     call(['amixer', "-q", 'sset', 'Speaker', '{0}%,{0}%'.format(DEFAULT_SOUND_VOLUME)])
 
-worker = IotWorker(POOL_NAME, on_message)
+
+#create a daemon and run the worker
+main_app(__name__, POOL_NAME, on_message)
