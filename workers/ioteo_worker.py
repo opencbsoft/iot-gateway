@@ -14,7 +14,7 @@ import json
 import requests
 import logging
 
-from generic_worker import IotWorker, Daemon
+from generic_worker import *
 from ioteo_settings import *
 
 '''
