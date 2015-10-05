@@ -9,6 +9,7 @@
 import json
 import requests
 import logging
+import daemon
 
 from generic_worker import IotWorker
 from ioteo_settings import *
@@ -36,5 +37,5 @@ def on_message(client, user_data, msg):
     if auth_request['success']:
         for camera_id in CAMERA_LIST:
             requests.get('{0}/set-configuration'.format(API_URL), params={'key': auth_request['key'], 'cam_id': camera_id, 'privacy': action}, verify=False).json()
-
-worker = IotWorker(POOL_NAME, on_message)
+with daemon.DaemonContext():
+    worker = IotWorker(POOL_NAME, on_message)
