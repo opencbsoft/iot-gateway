@@ -28,7 +28,8 @@ DEFAULT_SOUND_VOLUME = 80
 
 
 def on_message(client, user_data, msg):
-    data = json.loads(msg.payload)
+    print(msg.payload)
+    #data = json.loads(msg.payload)
     f = open('/home/pi/iot-gateway/workers/myfile','w')
     f.write(str(data)) # python will convert \n to os.linesep
     f.close() # you can omit in most cases as the destructor will call it
