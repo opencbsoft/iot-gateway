@@ -28,6 +28,7 @@ DEFAULT_SOUND_VOLUME = 80
 
 
 def on_message(client, user_data, msg):
+    print(msg.payload)
     data = json.loads(msg.payload)
     if data.get('left', False):
         call(['amixer', "-q", 'sset', 'PCM', '0%,{0}%'.format(DEFAULT_SOUND_VOLUME)])
