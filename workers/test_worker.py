@@ -33,11 +33,11 @@ def on_message(client, user_data, msg):
     f.write(str(data)) # python will convert \n to os.linesep
     f.close() # you can omit in most cases as the destructor will call it
     if data.get('left', False):
-        call(['amixer', "-q", 'sset', 'Master', '0%,{0}%'.format(DEFAULT_SOUND_VOLUME)])
+        call(['amixer', "-c", "0", "-q", 'sset', 'Master', '0%,{0}%'.format(DEFAULT_SOUND_VOLUME)])
     elif data.get('right', False):
-        call(['amixer', "-q", 'sset', 'Master', '{0}%,0%'.format(DEFAULT_SOUND_VOLUME)])
+        call(['amixer', "-c", "0", "-q", 'sset', 'Master', '{0}%,0%'.format(DEFAULT_SOUND_VOLUME)])
     call(["mpg123", "-q", "http://translate.google.com/translate_tts?tl=%s&q=%s&ie=%s&total=1&idx=0&client=t" % ("en", data.get('message', 'No message was set'), "UTF-8")])
-    call(['amixer', "-q", 'sset', 'Master', '{0}%,{0}%'.format(DEFAULT_SOUND_VOLUME)])
+    call(['amixer', "-c", "0", "-q", 'sset', 'Master', '{0}%,{0}%'.format(DEFAULT_SOUND_VOLUME)])
 
 
 
