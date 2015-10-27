@@ -28,6 +28,7 @@ CPP_EXE = 'send'
 
 
 def on_message(client, user_data, msg):
+    print(msg.payload)
     data = json.loads(msg.payload)
     action = data.get('action', 'power-on')
     id = data.get('id')
