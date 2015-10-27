@@ -23,7 +23,7 @@ from generic_worker import *
 
 # local settings
 POOL_NAME = 'lights'
-CPP_EXE = 'send'
+CPP_EXE = '/home/pi/iot-gateway/workers/send'
 
 
 
