@@ -29,7 +29,7 @@ CPP_EXE = '/home/pi/iot-gateway/workers/send'
 
 def on_message(client, user_data, msg):
     print(msg.payload)
-    data = json.loads(msg.payload)
+    data = json.loads(msg.payload.decode('UTF-8'))
     action = data.get('action', 'power-on')
     id = data.get('id')
     if id:
