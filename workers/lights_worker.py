@@ -36,4 +36,5 @@ def on_message(client, user_data, msg):
         else:
             call([CPP_EXE, '2', '1', id, '0'])
 #create a daemon and run the worker
-main_app(__name__, POOL_NAME, on_message)
+#main_app(__name__, POOL_NAME, on_message)
+worker = IotWorker(POOL_NAME, on_message)
