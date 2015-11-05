@@ -44,9 +44,10 @@ def device(request, url):
         """
             PROCESS DEVICE LOGIC
         """
-        if dev.action_file:
-            i = importlib.import_module(dev.action_file)
-            i.main(request.GET)
+        if dev.enabled:
+            if dev.action_file:
+                i = importlib.import_module(dev.action_file)
+                i.main(request.GET)
 
     if error:
         return HttpResponse(status=404, content=error)
